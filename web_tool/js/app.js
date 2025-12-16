@@ -62,9 +62,51 @@ document.getElementById('clearTermBtn').addEventListener('click', () => {
 
 let scriptCommands = [];
 
+// Command Templates & Help Text
+const commandTemplates = {
+    'version': { args: '', help: 'Returns version number of the runin framework' },
+    'runin msleep': { args: '1000', help: 'Sleep for N milliseconds (e.g. 1000)' },
+    'runin sleep': { args: '1', help: 'Sleep for N seconds (e.g. 1)' },
+    'runin echo': { args: '"message"', help: 'Writes user messages to the log file' },
+    'runin failures': { args: '', help: 'Lists the number of failures detected' },
+    'runin progress': { args: '', help: 'Reports runin progress as percent' },
+    'runin state': { args: '', help: 'Prints debug info for internal runin data structures' },
+    'runin status': { args: '', help: 'Print the list of commands saved on the device' },
+    'runin test': { args: '"command"', help: 'Runs the given command in blocking mode' }
+};
+
 function updateScriptDisplay() {
     document.getElementById('scriptDisplay').value = scriptCommands.join('\n');
 }
+
+// Handle Command Template Selection
+document.getElementById('commandTemplate').addEventListener('change', (e) => {
+    const selectedCmd = e.target.value;
+    const inputEl = document.getElementById('commandInput');
+    const helpEl = document.getElementById('commandHelpText');
+
+    if (selectedCmd && commandTemplates[selectedCmd]) {
+        // Pre-fill input with command + default args
+        const template = commandTemplates[selectedCmd];
+        // If there are args, add a space, otherwise just the command
+        inputEl.value = selectedCmd + (template.args ? ' ' + template.args : '');
+        helpEl.textContent = template.help;
+        
+        // Highlight the argument part for easy editing if it exists
+        if (template.args) {
+            // Wait for value to update then select the args part
+            setTimeout(() => {
+                const cmdLen = selectedCmd.length + 1; // +1 for space
+                inputEl.focus();
+                inputEl.setSelectionRange(cmdLen, inputEl.value.length);
+            }, 0);
+        }
+    } else {
+        // Custom mode
+        inputEl.value = '';
+        helpEl.textContent = 'Enter any custom command supported by the device.';
+    }
+});
 
 // Add Clear All
 document.getElementById('addClearBtn').addEventListener('click', () => {
