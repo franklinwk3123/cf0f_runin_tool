@@ -49,6 +49,10 @@ class RuninController {
     async checkProgress() {
         await this.sendCommand('runin progress');
     }
+
+    async help() {
+        await this.sendCommand('runin help');
+    }
     
     async stop() {
         await this.sendCommand('runin stop');
