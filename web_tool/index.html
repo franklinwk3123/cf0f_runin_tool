@@ -66,15 +66,18 @@
                         <hr>
 
                         <div class="mb-3">
-                            <label class="form-label">Start Runin</label>
+                            <label class="form-label">Start Runin (Execute Queue)</label>
                             <div class="row g-2">
                                 <div class="col-6">
-                                    <input type="number" class="form-control" id="duration" placeholder="Duration (sec)">
+                                    <label class="small text-muted">Run for Time</label>
+                                    <input type="number" class="form-control" id="duration" placeholder="Seconds (e.g. 60)">
                                 </div>
                                 <div class="col-6">
-                                    <input type="number" class="form-control" id="iterations" placeholder="Iterations">
+                                    <label class="small text-muted">Run for Loops</label>
+                                    <input type="number" class="form-control" id="iterations" placeholder="Count (e.g. 5)">
                                 </div>
                                 <div class="col-12">
+                                    <div class="form-text mb-2">Fill in <b>one</b> of the above to set the test limit.</div>
                                     <button id="startRuninBtn" class="btn btn-warning w-100">Start Runin Sequence</button>
                                 </div>
                             </div>
