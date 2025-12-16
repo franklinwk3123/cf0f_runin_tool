@@ -53,4 +53,20 @@ class RuninController {
     async stop() {
         await this.sendCommand('runin stop');
     }
+
+    // Helper methods to generate command strings without sending
+    getClearCommandString() {
+        return 'runin clear all';
+    }
+
+    getAddCommandString(schedule, command) {
+        return `runin add -w ${schedule} ${command}`;
+    }
+
+    getStartCommandString(schedule, iterations = null, duration = null) {
+        let cmd = `runin start -w ${schedule}`;
+        if (iterations) cmd += ` -n ${iterations}`;
+        if (duration) cmd += ` -t ${duration}`;
+        return cmd;
+    }
 }

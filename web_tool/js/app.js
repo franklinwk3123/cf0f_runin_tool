@@ -60,23 +60,37 @@ document.getElementById('clearTermBtn').addEventListener('click', () => {
 
 // --- Runin UI Logic ---
 
+let scriptCommands = [];
+
+function updateScriptDisplay() {
+    document.getElementById('scriptDisplay').value = scriptCommands.join('\n');
+}
+
+// Add Clear All
+document.getElementById('addClearBtn').addEventListener('click', () => {
+    scriptCommands.push(runin.getClearCommandString());
+    updateScriptDisplay();
+});
+
 // Add Command Form
-document.getElementById('addCommandForm').addEventListener('submit', async (e) => {
+document.getElementById('addCommandForm').addEventListener('submit', (e) => {
     e.preventDefault();
     const schedule = document.getElementById('scheduleType').value;
     const command = document.getElementById('commandInput').value;
     
     if (!command) return;
 
-    await runin.addCommand(schedule, command);
+    const cmdStr = runin.getAddCommandString(schedule, command);
+    scriptCommands.push(cmdStr);
+    updateScriptDisplay();
     
-    // Optional: Clear input or keep it for repeated entry
+    // Optional: Clear input
     // document.getElementById('commandInput').value = '';
 });
 
-// Start Runin Button
-document.getElementById('startRuninBtn').addEventListener('click', async () => {
-    const schedule = document.getElementById('scheduleType').value; // Use the same schedule selector
+// Add Start Command
+document.getElementById('addStartBtn').addEventListener('click', () => {
+    const schedule = document.getElementById('scheduleType').value;
     const duration = document.getElementById('duration').value;
     const iterations = document.getElementById('iterations').value;
 
@@ -85,7 +99,30 @@ document.getElementById('startRuninBtn').addEventListener('click', async () => {
         return;
     }
 
-    await runin.startRunin(schedule, iterations, duration);
+    const cmdStr = runin.getStartCommandString(schedule, iterations, duration);
+    scriptCommands.push(cmdStr);
+    updateScriptDisplay();
+});
+
+// Execute Script
+document.getElementById('executeScriptBtn').addEventListener('click', async () => {
+    if (scriptCommands.length === 0) {
+        alert('Script is empty!');
+        return;
+    }
+    
+    // Visual feedback
+    term.writeln('\x1b[33m[System] Executing script...\x1b[0m');
+    
+    await runin.sendSequence(scriptCommands);
+    
+    term.writeln('\x1b[32m[System] Script execution finished.\x1b[0m');
+});
+
+// Clear Script
+document.getElementById('clearScriptBtn').addEventListener('click', () => {
+    scriptCommands = [];
+    updateScriptDisplay();
 });
 
 // Expose runin controller to global scope for inline HTML onclick handlers

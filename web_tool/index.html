@@ -30,57 +30,74 @@
         <div class="row">
             <!-- Left Panel: Controls -->
             <div class="col-md-5">
+                <!-- Immediate Actions -->
                 <div class="card mb-3">
-                    <div class="card-header">Runin Sequence Builder</div>
+                    <div class="card-header">Device Monitor</div>
                     <div class="card-body">
-                        <div class="mb-3">
-                            <label class="form-label">Quick Actions</label>
-                            <div class="d-flex gap-2 flex-wrap">
-                                <button class="btn btn-outline-secondary btn-sm" onclick="runin.clearAll()">Clear All</button>
-                                <button class="btn btn-outline-secondary btn-sm" onclick="runin.checkStatus()">Check Status</button>
-                                <button class="btn btn-outline-secondary btn-sm" onclick="runin.getLogs()">Get Logs</button>
-                                <button class="btn btn-outline-secondary btn-sm" onclick="runin.checkProgress()">Check Progress</button>
-                            </div>
+                        <div class="d-flex gap-2 flex-wrap">
+                            <button class="btn btn-outline-secondary btn-sm" onclick="runin.checkStatus()">Check Status</button>
+                            <button class="btn btn-outline-secondary btn-sm" onclick="runin.getLogs()">Get Logs</button>
+                            <button class="btn btn-outline-secondary btn-sm" onclick="runin.checkProgress()">Check Progress</button>
+                            <button class="btn btn-outline-danger btn-sm" onclick="runin.stop()">Stop Runin</button>
                         </div>
-                        
+                    </div>
+                </div>
+
+                <!-- Script Builder -->
+                <div class="card mb-3">
+                    <div class="card-header">Script Builder</div>
+                    <div class="card-body">
+                        <!-- Step 1: Init -->
+                        <div class="mb-3">
+                            <button id="addClearBtn" class="btn btn-outline-primary w-100">Add "Clear All" to Script</button>
+                        </div>
+
                         <hr>
 
+                        <!-- Step 2: Add Commands -->
                         <form id="addCommandForm">
                             <div class="mb-3">
-                                <label for="scheduleType" class="form-label">Schedule (-w)</label>
-                                <select id="scheduleType" class="form-select">
-                                    <option value="now">Now (Immediate)</option>
-                                    <option value="boot">Boot (Next Restart)</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="commandInput" class="form-label">Command</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="commandInput" placeholder="e.g. msleep 1000">
-                                    <button class="btn btn-success" type="submit">Add to Queue</button>
+                                <label class="form-label">Add Test Command</label>
+                                <div class="input-group mb-2">
+                                    <select id="scheduleType" class="form-select" style="max-width: 100px;">
+                                        <option value="now">Now</option>
+                                        <option value="boot">Boot</option>
+                                    </select>
+                                    <input type="text" class="form-control" id="commandInput" placeholder="e.g. version">
                                 </div>
-                                <div class="form-text">Common: <code>msleep 1000</code>, <code>version</code>, <code>fct-sys component_check</code></div>
+                                <button class="btn btn-outline-secondary w-100" type="submit">Add to Script</button>
+                                <div class="form-text">Common: <code>msleep 1000</code>, <code>version</code></div>
                             </div>
                         </form>
 
                         <hr>
 
+                        <!-- Step 3: Start Config -->
                         <div class="mb-3">
-                            <label class="form-label">Start Runin (Execute Queue)</label>
-                            <div class="row g-2">
+                            <label class="form-label">Add Start Command</label>
+                            <div class="row g-2 mb-2">
                                 <div class="col-6">
                                     <label class="small text-muted">Run for Time</label>
-                                    <input type="number" class="form-control" id="duration" placeholder="Seconds (e.g. 60)">
+                                    <input type="number" class="form-control" id="duration" placeholder="Seconds">
                                 </div>
                                 <div class="col-6">
                                     <label class="small text-muted">Run for Loops</label>
-                                    <input type="number" class="form-control" id="iterations" placeholder="Count (e.g. 5)">
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-text mb-2">Fill in <b>one</b> of the above to set the test limit.</div>
-                                    <button id="startRuninBtn" class="btn btn-warning w-100">Start Runin Sequence</button>
+                                    <input type="number" class="form-control" id="iterations" placeholder="Loops">
                                 </div>
                             </div>
+                            <button id="addStartBtn" class="btn btn-outline-secondary w-100">Add Start to Script</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Script Preview -->
+                <div class="card mb-3">
+                    <div class="card-header">Generated Script</div>
+                    <div class="card-body">
+                        <textarea id="scriptDisplay" class="form-control mb-3 font-monospace" rows="8" readonly style="font-size: 0.85rem; background-color: #f8f9fa;"></textarea>
+                        <div class="d-flex gap-2">
+                            <button id="executeScriptBtn" class="btn btn-success flex-grow-1">Run Script</button>
+                            <button id="clearScriptBtn" class="btn btn-outline-danger">Clear</button>
                         </div>
                     </div>
                 </div>
