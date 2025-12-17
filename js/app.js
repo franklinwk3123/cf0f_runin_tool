@@ -171,6 +171,41 @@ document.getElementById('addStartBtn').addEventListener('click', () => {
     updateScriptDisplay();
 });
 
+// Script Import/Export
+document.getElementById('exportScriptBtn').addEventListener('click', () => {
+    const content = scriptCommands.join('\n');
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+    a.download = `runin_script_${timestamp}.conf`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+});
+
+document.getElementById('importScriptBtn').addEventListener('click', () => {
+    document.getElementById('scriptFileInput').click();
+});
+
+document.getElementById('scriptFileInput').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        const content = e.target.result;
+        // Split by newline to get array
+        scriptCommands = content.split(/\r?\n/);
+        updateScriptDisplay();
+        // Reset file input
+        document.getElementById('scriptFileInput').value = '';
+    };
+    reader.readAsText(file);
+});
+
 // Execute Script
 document.getElementById('executeScriptBtn').addEventListener('click', async () => {
     if (scriptCommands.length === 0) {

@@ -124,7 +124,14 @@
 
                 <!-- Script Preview -->
                 <div class="card mb-3">
-                    <div class="card-header">Generated Script</div>
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span>Generated Script</span>
+                        <div>
+                            <input type="file" id="scriptFileInput" accept=".conf" style="display: none;">
+                            <button class="btn btn-sm btn-outline-secondary me-2" id="importScriptBtn">Import</button>
+                            <button class="btn btn-sm btn-outline-secondary" id="exportScriptBtn">Export</button>
+                        </div>
+                    </div>
                     <div class="card-body">
                         <textarea id="scriptDisplay" class="form-control mb-3 font-monospace" readonly></textarea>
                         <div class="d-flex gap-2">
