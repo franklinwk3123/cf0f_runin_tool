@@ -42,6 +42,10 @@ class RuninController {
         await this.sendCommand('runin log');
     }
 
+    async checkState() {
+        await this.sendCommand('runin state');
+    }
+
     async checkStatus() {
         await this.sendCommand('runin status');
     }
