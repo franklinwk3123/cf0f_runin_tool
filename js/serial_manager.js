@@ -18,7 +18,13 @@ class SerialManager {
     async connect(baudRate = 115200) {
         this.baudRate = parseInt(baudRate);
         
+        if (!navigator.serial) {
+            alert('Web Serial API not supported. Please use Chrome or Edge and ensure you are on HTTPS or localhost.');
+            return;
+        }
+
         try {
+            console.log('Requesting serial port...');
             // Request a port and open a connection.
             this.port = await navigator.serial.requestPort();
             
