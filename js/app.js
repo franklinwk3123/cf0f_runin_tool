@@ -58,6 +58,31 @@ document.getElementById('clearTermBtn').addEventListener('click', () => {
     term.clear();
 });
 
+document.getElementById('exportTermBtn').addEventListener('click', () => {
+    let logContent = '';
+    const buffer = term.buffer.active;
+    // Iterate through all lines in the buffer
+    for (let i = 0; i < buffer.length; i++) {
+        const line = buffer.getLine(i);
+        if (line) {
+            // translateToString(true) trims trailing whitespace
+            logContent += line.translateToString(true) + '\n';
+        }
+    }
+
+    const blob = new Blob([logContent], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    // Generate filename with timestamp
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+    a.download = `terminal_export_${timestamp}.log`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+});
+
 // --- Runin UI Logic ---
 
 let scriptCommands = [];
