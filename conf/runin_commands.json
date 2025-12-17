@@ -1,0 +1,128 @@
+[
+    {
+        "id": "version",
+        "command": "version",
+        "label": "version",
+        "category": "monitor",
+        "args": "",
+        "options": "",
+        "help": "Returns version number of the runin framework"
+    },
+    {
+        "id": "msleep",
+        "command": "runin msleep",
+        "label": "msleep",
+        "category": "script",
+        "args": "1000",
+        "options": "N",
+        "help": "Sleep for N milliseconds (e.g. 1000)"
+    },
+    {
+        "id": "sleep",
+        "command": "runin sleep",
+        "label": "sleep",
+        "category": "script",
+        "args": "1",
+        "options": "N",
+        "help": "Sleep for N seconds (e.g. 1)"
+    },
+    {
+        "id": "echo",
+        "command": "runin echo",
+        "label": "echo",
+        "category": "script",
+        "args": "\"message\"",
+        "options": "[-eid] [message]",
+        "help": "Writes user messages to the log file"
+    },
+    {
+        "id": "failures",
+        "command": "runin failures",
+        "label": "failures",
+        "category": "monitor",
+        "args": "",
+        "options": "",
+        "help": "Lists the number of failures detected"
+    },
+    {
+        "id": "progress",
+        "command": "runin progress",
+        "label": "progress",
+        "category": "monitor",
+        "args": "",
+        "options": "",
+        "help": "Reports runin progress as percent"
+    },
+    {
+        "id": "state",
+        "command": "runin state",
+        "label": "state",
+        "category": "monitor",
+        "args": "",
+        "options": "",
+        "help": "Prints debug info for internal runin data structures"
+    },
+    {
+        "id": "status",
+        "command": "runin status",
+        "label": "status",
+        "category": "monitor",
+        "args": "",
+        "options": "",
+        "help": "Print the list of commands saved on the device"
+    },
+    {
+        "id": "test",
+        "command": "runin test",
+        "label": "test",
+        "category": "script",
+        "args": "\"command\"",
+        "options": "\"command\"",
+        "help": "Runs the given command in blocking mode"
+    },
+    {
+        "id": "log",
+        "command": "runin log",
+        "label": "log",
+        "category": "monitor",
+        "args": "",
+        "options": "",
+        "help": "Retrieve runin logs"
+    },
+    {
+        "id": "help",
+        "command": "runin help",
+        "label": "help",
+        "category": "monitor",
+        "args": "",
+        "options": "[<module_name>|all]",
+        "help": "Show runin help"
+    },
+    {
+        "id": "stop",
+        "command": "runin stop",
+        "label": "stop",
+        "category": "control",
+        "args": "",
+        "options": "",
+        "help": "Stop runin execution"
+    },
+    {
+        "id": "start",
+        "command": "runin start",
+        "label": "start",
+        "category": "control",
+        "args": "-w now -n 1",
+        "options": "-w [now|boot] -n N -t T -x [0|1] -s -v [lcd|log]",
+        "help": "Start runin execution"
+    },
+    {
+        "id": "clear",
+        "command": "runin clear all",
+        "label": "clear all",
+        "category": "control",
+        "args": "",
+        "options": "[log|cmd|all]",
+        "help": "Clear all runin commands"
+    }
+]

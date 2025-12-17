@@ -30,28 +30,53 @@
         <div class="row">
             <!-- Left Panel: Controls -->
             <div class="col-md-5">
-                <!-- Immediate Actions -->
-                <div class="card mb-3">
-                    <div class="card-header">Device Monitor</div>
-                    <div class="card-body">
-                        <div class="d-flex gap-2 flex-wrap">
-                            <button class="btn btn-outline-secondary btn-sm" onclick="runin.checkState()">Runin State</button>
-                            <button id="btn-runin-status" class="btn btn-outline-secondary btn-sm d-none" onclick="runin.checkStatus()" disabled>Runin Status</button>
-                            <button class="btn btn-outline-secondary btn-sm" onclick="runin.getLogs()">Runin Log</button>
-                            <button class="btn btn-outline-secondary btn-sm" onclick="runin.checkProgress()">Runin Progress</button>
-                            <button class="btn btn-outline-info btn-sm" onclick="runin.help()">Runin Help</button>
-                            <button class="btn btn-outline-danger btn-sm" onclick="runin.stop()">Runin Stop</button>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Script Builder -->
                 <div class="card mb-3">
                     <div class="card-header">Script Builder</div>
                     <div class="card-body">
+                        <!-- Global Schedule Setting -->
+                        <div class="mb-3 p-2 bg-light rounded border">
+                            <label class="form-label fw-bold mb-1">Schedule Mode (-w)</label>
+                            <div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="globalSchedule" id="scheduleNow" value="now" checked>
+                                    <label class="form-check-label" for="scheduleNow">Now (Attach)</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="globalSchedule" id="scheduleBoot" value="boot">
+                                    <label class="form-check-label" for="scheduleBoot">Boot (Detach)</label>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Step 1: Init -->
                         <div class="mb-3">
-                            <button id="addClearBtn" class="btn btn-outline-primary w-100">Add "Clear All" to Script</button>
+                            <label class="form-label">Clear Command</label>
+                            <div class="d-flex gap-3 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="clearTarget" id="clearAll" value="all" checked>
+                                    <label class="form-check-label" for="clearAll">All</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="clearTarget" id="clearLog" value="log">
+                                    <label class="form-check-label" for="clearLog">Log</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="clearTarget" id="clearCmd" value="cmd">
+                                    <label class="form-check-label" for="clearCmd">Cmd</label>
+                                </div>
+                            </div>
+                            <button id="addClearBtn" class="btn btn-outline-primary w-100">Add Clear Command</button>
+                        </div>
+
+                        <hr>
+
+                        <!-- Quick Command -->
+                        <div class="mb-3">
+                            <label class="form-label">Quick Command</label>
+                            <div id="deviceMonitorButtons" class="row g-2">
+                                <!-- Buttons will be populated dynamically -->
+                            </div>
                         </div>
 
                         <hr>
@@ -61,10 +86,6 @@
                             <div class="mb-3">
                                 <label class="form-label">Add Test Command</label>
                                 <div class="input-group mb-2">
-                                    <select id="scheduleType" class="form-select" style="max-width: 90px;">
-                                        <option value="now">Now</option>
-                                        <option value="boot">Boot</option>
-                                    </select>
                                     <!-- Command Selector -->
                                     <select id="commandTemplate" class="form-select" style="max-width: 140px;">
                                         <option value="">Custom...</option>
@@ -90,18 +111,43 @@
 
                         <!-- Step 3: Start Config -->
                         <div class="mb-3">
-                            <label class="form-label">Add Start Command</label>
+                            <label class="form-label">Start Configuration</label>
+                            
+                            <!-- Duration / Iterations -->
                             <div class="row g-2 mb-2">
                                 <div class="col-6">
-                                    <label class="small text-muted">Run for Time</label>
+                                    <label class="small text-muted">Run for Time (-t)</label>
                                     <input type="number" class="form-control" id="duration" placeholder="Seconds">
                                 </div>
                                 <div class="col-6">
-                                    <label class="small text-muted">Run for Loops</label>
+                                    <label class="small text-muted">Run for Loops (-n)</label>
                                     <input type="number" class="form-control" id="iterations" placeholder="Loops">
                                 </div>
                             </div>
-                            <button id="addStartBtn" class="btn btn-outline-secondary w-100">Add Start to Script</button>
+
+                            <!-- Exit on Failure & Silence -->
+                            <div class="row mb-3">
+                                <div class="col-7">
+                                    <label class="small text-muted d-block">Exit on Failure (-x)</label>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="exitOnFailure" id="exitOnFailTrue" value="1" checked>
+                                        <label class="form-check-label" for="exitOnFailTrue">Yes (1)</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="exitOnFailure" id="exitOnFailFalse" value="0">
+                                        <label class="form-check-label" for="exitOnFailFalse">No (0)</label>
+                                    </div>
+                                </div>
+                                <div class="col-5">
+                                    <label class="small text-muted d-block">&nbsp;</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="silenceOutput">
+                                        <label class="form-check-label" for="silenceOutput">Silence Output (-s)</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button id="addStartBtn" class="btn btn-outline-success w-100">Add Start Command</button>
                         </div>
                     </div>
                 </div>

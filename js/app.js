@@ -87,18 +87,65 @@ document.getElementById('exportTermBtn').addEventListener('click', () => {
 
 let scriptCommands = [];
 
-// Command Templates & Help Text
-const commandTemplates = {
-    'version': { args: '', help: 'Returns version number of the runin framework' },
-    'runin msleep': { args: '1000', help: 'Sleep for N milliseconds (e.g. 1000)' },
-    'runin sleep': { args: '1', help: 'Sleep for N seconds (e.g. 1)' },
-    'runin echo': { args: '"message"', help: 'Writes user messages to the log file' },
-    'runin failures': { args: '', help: 'Lists the number of failures detected' },
-    'runin progress': { args: '', help: 'Reports runin progress as percent' },
-    'runin state': { args: '', help: 'Prints debug info for internal runin data structures' },
-    'runin status': { args: '', help: 'Print the list of commands saved on the device' },
-    'runin test': { args: '"command"', help: 'Runs the given command in blocking mode' }
-};
+// Initialize Runin Commands
+(async () => {
+    await runin.loadCommands('conf/runin_commands.json');
+    populateCommandDropdown();
+    populateDeviceMonitor();
+})();
+
+function populateCommandDropdown() {
+    const select = document.getElementById('commandTemplate');
+    select.innerHTML = '<option value="">Custom...</option>';
+    
+    const commands = runin.getCommands();
+    commands.filter(cmd => cmd.category === 'script').forEach(cmd => {
+        const option = document.createElement('option');
+        option.value = cmd.command;
+        option.textContent = cmd.label;
+        select.appendChild(option);
+    });
+}
+
+function populateDeviceMonitor() {
+    const container = document.getElementById('deviceMonitorButtons');
+    container.innerHTML = '';
+
+    const commands = runin.getCommands();
+    
+    // Filter commands
+    const monitorCmds = commands.filter(cmd => cmd.category === 'monitor');
+    const stopCmd = commands.find(cmd => cmd.id === 'stop');
+    
+    // Combine all buttons to be displayed
+    const allButtons = [...monitorCmds];
+    if (stopCmd) allButtons.push(stopCmd);
+
+    // Create buttons in a grid
+    allButtons.forEach(cmd => {
+        const col = document.createElement('div');
+        col.className = 'col-6 col-md-3'; // Responsive: 2 per row on small, 4 per row on medium+
+        
+        const btn = document.createElement('button');
+        // Use different style for Stop command
+        const isStop = cmd.id === 'stop';
+        btn.className = `btn ${isStop ? 'btn-outline-danger' : 'btn-outline-secondary'} w-100 btn-sm`;
+        
+        // Simplify label: remove "Runin " prefix to save space if needed, or keep it
+        // Using just the label for cleaner look in grid
+        btn.textContent = cmd.label.charAt(0).toUpperCase() + cmd.label.slice(1);
+        
+        btn.onclick = () => {
+            const schedule = document.querySelector('input[name="globalSchedule"]:checked').value;
+            const cmdStr = runin.getAddCommandString(schedule, cmd.command);
+            scriptCommands.push(cmdStr);
+            updateScriptDisplay();
+        };
+        
+        col.appendChild(btn);
+        container.appendChild(col);
+    });
+}
 
 function updateScriptDisplay() {
     document.getElementById('scriptDisplay').value = scriptCommands.join('\n');
@@ -106,22 +153,24 @@ function updateScriptDisplay() {
 
 // Handle Command Template Selection
 document.getElementById('commandTemplate').addEventListener('change', (e) => {
-    const selectedCmd = e.target.value;
+    const selectedCmdValue = e.target.value;
     const inputEl = document.getElementById('commandInput');
     const helpEl = document.getElementById('commandHelpText');
 
-    if (selectedCmd && commandTemplates[selectedCmd]) {
+    const commands = runin.getCommands();
+    const template = commands.find(c => c.command === selectedCmdValue);
+
+    if (template) {
         // Pre-fill input with command + default args
-        const template = commandTemplates[selectedCmd];
         // If there are args, add a space, otherwise just the command
-        inputEl.value = selectedCmd + (template.args ? ' ' + template.args : '');
+        inputEl.value = template.command + (template.args ? ' ' + template.args : '');
         helpEl.textContent = template.help;
         
         // Highlight the argument part for easy editing if it exists
         if (template.args) {
             // Wait for value to update then select the args part
             setTimeout(() => {
-                const cmdLen = selectedCmd.length + 1; // +1 for space
+                const cmdLen = template.command.length + 1; // +1 for space
                 inputEl.focus();
                 inputEl.setSelectionRange(cmdLen, inputEl.value.length);
             }, 0);
@@ -133,16 +182,17 @@ document.getElementById('commandTemplate').addEventListener('change', (e) => {
     }
 });
 
-// Add Clear All
+// Add Clear Command
 document.getElementById('addClearBtn').addEventListener('click', () => {
-    scriptCommands.push(runin.getClearCommandString());
+    const target = document.querySelector('input[name="clearTarget"]:checked').value;
+    scriptCommands.push(runin.getClearCommandString(target));
     updateScriptDisplay();
 });
 
 // Add Command Form
 document.getElementById('addCommandForm').addEventListener('submit', (e) => {
     e.preventDefault();
-    const schedule = document.getElementById('scheduleType').value;
+    const schedule = document.querySelector('input[name="globalSchedule"]:checked').value;
     const command = document.getElementById('commandInput').value;
     
     if (!command) return;
@@ -157,16 +207,18 @@ document.getElementById('addCommandForm').addEventListener('submit', (e) => {
 
 // Add Start Command
 document.getElementById('addStartBtn').addEventListener('click', () => {
-    const schedule = document.getElementById('scheduleType').value;
+    const schedule = document.querySelector('input[name="globalSchedule"]:checked').value;
     const duration = document.getElementById('duration').value;
     const iterations = document.getElementById('iterations').value;
+    const exitOnFailure = document.querySelector('input[name="exitOnFailure"]:checked').value;
+    const silence = document.getElementById('silenceOutput').checked;
 
     if (!duration && !iterations) {
         alert('Please specify either Duration or Iterations.');
         return;
     }
 
-    const cmdStr = runin.getStartCommandString(schedule, iterations, duration);
+    const cmdStr = runin.getStartCommandString(schedule, iterations, duration, exitOnFailure, silence);
     scriptCommands.push(cmdStr);
     updateScriptDisplay();
 });
