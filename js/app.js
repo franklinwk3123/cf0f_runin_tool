@@ -279,5 +279,11 @@ document.getElementById('clearScriptBtn').addEventListener('click', () => {
     updateScriptDisplay();
 });
 
+// Undo Script (Remove last line)
+document.getElementById('undoScriptBtn').addEventListener('click', () => {
+    scriptCommands.pop();
+    updateScriptDisplay();
+});
+
 // Expose runin controller to global scope for inline HTML onclick handlers
 window.runin = runin;
