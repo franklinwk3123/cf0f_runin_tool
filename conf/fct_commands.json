@@ -1,0 +1,642 @@
+[
+    {
+        "module": "General_Commands",
+        "command": "help",
+        "description": "Expects: help"
+    },
+    {
+        "module": "General_Commands",
+        "command": "version",
+        "description": "Expects: version"
+    },
+    {
+        "module": "General_Commands",
+        "command": "baudrate",
+        "description": "Expects: ACK: baudrate"
+    },
+    {
+        "module": "System_Commands",
+        "command": "suspend",
+        "description": "Expects: Suspend ended due to HW button press"
+    },
+    {
+        "module": "System_Commands",
+        "command": "reset",
+        "description": "Expects: ACK: reset"
+    },
+    {
+        "module": "System_Commands",
+        "command": "fct-reset -s 1",
+        "description": "Expects: ACK: fct-reset"
+    },
+    {
+        "module": "System_Commands",
+        "command": "fct-acmp read hvbuck",
+        "description": "Expects: ACK: fct-acmp"
+    },
+    {
+        "module": "System_Commands",
+        "command": "fct-stress cpu",
+        "description": "Expects: ACK: fct-stress"
+    },
+    {
+        "module": "System_Commands",
+        "command": "fct-pwrmon",
+        "description": "Expects: ACK: fct-pwrmon"
+    },
+    {
+        "module": "System_Commands",
+        "command": "fct-bootinfo",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "System_Commands",
+        "command": "auto-ship-mode force",
+        "description": "Expects: Forcing ship mode."
+    },
+    {
+        "module": "System_Commands",
+        "command": "fct-disp-pattern start",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "Devicedata_Commands",
+        "command": "sysenv",
+        "description": "Expects: ACK: sysenv"
+    },
+    {
+        "module": "Devicedata_Commands",
+        "command": "sysenv set lens_color 3",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "Devicedata_Commands",
+        "command": "sysenv get lens_color",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "Devicedata_Commands",
+        "command": "factory_reset",
+        "description": "Expects: ACK: factory_reset"
+    },
+    {
+        "module": "ALS_Commands",
+        "command": "tcs3410 detect",
+        "description": "Expects: Yes"
+    },
+    {
+        "module": "ALS_Commands",
+        "command": "tcs3410 reset",
+        "description": "Expects: Reset completed with error 0"
+    },
+    {
+        "module": "ALS_Commands",
+        "command": "tcs3410 gain 4096",
+        "description": "Expects: ACK: tcs3410"
+    },
+    {
+        "module": "ALS_Commands",
+        "command": "tcs3410 sample_time 900",
+        "description": "Expects: ACK: tcs3410"
+    },
+    {
+        "module": "ALS_Commands",
+        "command": "tcs3410 als_nr_samples 400",
+        "description": "Expects: ACK: tcs3410"
+    },
+    {
+        "module": "ALS_Commands",
+        "command": "tcs3410 read 2",
+        "description": "Expects: ACK: tcs3410"
+    },
+    {
+        "module": "eeprom_Commands",
+        "command": "fct-bp-eeprom read",
+        "description": "Expects: ACK: fct-bp-eeprom"
+    },
+    {
+        "module": "RHT_Commands",
+        "command": "rht 0 read t",
+        "description": "Expects: Temperature:"
+    },
+    {
+        "module": "RHT_Commands",
+        "command": "rht 1 read t",
+        "description": "Expects: Temperature:"
+    },
+    {
+        "module": "RHT_Commands",
+        "command": "rht 1 read rh",
+        "description": "Expects: Relative Humidity:"
+    },
+    {
+        "module": "RHT_Commands",
+        "command": "rht 1 read rht",
+        "description": "Expects: Temperature:"
+    },
+    {
+        "module": "wheel_sensor_Commands",
+        "command": "dial start 1000 2",
+        "description": "Expects: dial_d"
+    },
+    {
+        "module": "ADC_Commands",
+        "command": "fct-adc mlbntc sw 3 1",
+        "description": "Expects: INFO: sw"
+    },
+    {
+        "module": "ADC_Commands",
+        "command": "fct-adc hwid 1",
+        "description": "Expects: INFO: HWID ADC value"
+    },
+    {
+        "module": "WiFi_Commands",
+        "command": "sta init",
+        "description": "Expects: [WiFi] Starting initialization..."
+    },
+    {
+        "module": "WiFi_Commands",
+        "command": "sta scan",
+        "description": "Expects: SPPC_SW2"
+    },
+    {
+        "module": "WiFi_Commands",
+        "command": "wl ver",
+        "description": "Expects: WLCMD: ret=0"
+    },
+    {
+        "module": "WiFi_Commands",
+        "command": "iperf start",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "WiFi_Commands",
+        "command": "iperf stop",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "WiFi_Commands",
+        "command": "sta connect SPPC_SW2 1 1688Rich",
+        "description": "Expects: [DHCP_DONE ]"
+    },
+    {
+        "module": "WiFi_Commands",
+        "command": "sta disconnect",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "BLE_Commands",
+        "command": "ble init",
+        "description": "Expects: BLE is up"
+    },
+    {
+        "module": "BLE_Commands",
+        "command": "ble hci_cmd 04 0001",
+        "description": "Expects: 0B 89 04 0B  0F 00 11 11"
+    },
+    {
+        "module": "BLE_Commands",
+        "command": "ble scan start",
+        "description": "Expects: BLE Scan started"
+    },
+    {
+        "module": "BLE_Commands",
+        "command": "ble scan stop",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "BLE_Commands",
+        "command": "ble le_tx_test 1 1 1",
+        "description": "Expects: Error:shell_le_tx_test failed with error"
+    },
+    {
+        "module": "BLE_Commands",
+        "command": "ble le_rx_test 1",
+        "description": "Expects: Error:shell_le_rx_test failed with error"
+    },
+    {
+        "module": "BLE_Commands",
+        "command": "ble le_test_end",
+        "description": "Expects: Number of packets transmitted/received:"
+    },
+    {
+        "module": "BLE_Commands",
+        "command": "ble read_rssi",
+        "description": "Expects: Error:shell_read_rssi failed with error "
+    },
+    {
+        "module": "BLE_Commands",
+        "command": "ble gpio read 2",
+        "description": "Expects: BLE GPIO pin 2 is 0"
+    },
+    {
+        "module": "BLE_Commands",
+        "command": "ble gpio write 2 1",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "BLE_Commands",
+        "command": "ble gpio read 2",
+        "description": "Expects: BLE GPIO pin 2 is 1"
+    },
+    {
+        "module": "BLE_Commands",
+        "command": "ble gpio write 2 0",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "backlight_Commands",
+        "command": "fct-bl stop",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "backlight_Commands",
+        "command": "fct-bl start",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "backlight_Commands",
+        "command": "fct-bl set_brightness 255",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "backlight_Commands",
+        "command": "fct-bl set_brightness_nits 200",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "backlight_Commands",
+        "command": "fct-bl set_current_percent 100",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "pwrmon_Commands",
+        "command": "fct-pwrmon dcin1 diff sys",
+        "description": "Expects: INFO: Device : dcin1"
+    },
+    {
+        "module": "pwrmon_Commands",
+        "command": "fct-pwrmon hvbuckin read",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "pwrmon_Commands",
+        "command": " fct-pwrmon sys read",
+        "description": "Expects: INFO: Device : sys"
+    },
+    {
+        "module": "pwrmon_Commands",
+        "command": "fct-pwrmon dcin1 read",
+        "description": "Expects: INFO: Device : dcin1"
+    },
+    {
+        "module": "pwrmon_Commands",
+        "command": "fct-pwrmon hvbuckin type",
+        "description": "Expects: INFO: IC type is TI"
+    },
+    {
+        "module": "piezo_Commands",
+        "command": " fct-piezo start",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "piezo_Commands",
+        "command": " fct-piezo stop",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "led_Commands",
+        "command": "fct-led amber on",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "led_Commands",
+        "command": "fct-led amber off",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "button_Commands",
+        "command": "fct-button start-record",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "button_Commands",
+        "command": "fct-button stop-record",
+        "description": "Expects: INFO: button cycles:"
+    },
+    {
+        "module": "sdram_Commands",
+        "command": "fct-sdram test",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "schumacher_Commands",
+        "command": "hvac set W1",
+        "description": "Expects: set switch W1"
+    },
+    {
+        "module": "schumacher_Commands",
+        "command": "hvac deinit 1",
+        "description": "Expects: De-initializing ps13216 number 1"
+    },
+    {
+        "module": "schumacher_Commands",
+        "command": "hvac init 1",
+        "description": "Expects: Initializing ps13216 number 1"
+    },
+    {
+        "module": "schumacher_Commands",
+        "command": "hvac adc W1",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "schumacher_Commands",
+        "command": "hvac adc_full 0",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "schumacher_Commands",
+        "command": "hvac read 1 0",
+        "description": "Expects: Reg 0x00 of 1 is 0x4d"
+    },
+    {
+        "module": "schumacher_Commands",
+        "command": "hvac registers 1",
+        "description": "Expects: 00: 4d 25"
+    },
+    {
+        "module": "schumacher_Commands",
+        "command": "hvac wafer 1",
+        "description": "Expects: Wafer ID:"
+    },
+    {
+        "module": "schumacher_Commands",
+        "command": "hvac serial 0",
+        "description": "Expects: Serial number:"
+    },
+    {
+        "module": "schumacher_Commands",
+        "command": "hvac saps Y1 off",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "schumacher_Commands",
+        "command": "hvac temp W1",
+        "description": "Expects: Temperature (W1):"
+    },
+    {
+        "module": "schumacher_Commands",
+        "command": "hvac hvsense Y1",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "HVAC_Commands",
+        "command": " fct-hvac-pwr-load on 100",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "radar_Commands",
+        "command": "fct-radar detect",
+        "description": "Expects: Detected:"
+    },
+    {
+        "module": "radar_Commands",
+        "command": "fct-radar open",
+        "description": "Expects: ACK: fct-radar"
+    },
+    {
+        "module": "radar_Commands",
+        "command": "fct-radar info",
+        "description": "Expects: Description:"
+    },
+    {
+        "module": "radar_Commands",
+        "command": "fct-radar temp",
+        "description": "Expects: temp:"
+    },
+    {
+        "module": "radar_Commands",
+        "command": "fct-radar config",
+        "description": "Expects: samples per chirp:"
+    },
+    {
+        "module": "radar_Commands",
+        "command": "fct-radar average 0",
+        "description": "Expects: ACK: fct-radar"
+    },
+    {
+        "module": "radar_Commands",
+        "command": "fct-radar configa",
+        "description": "Expects: ACK: fct-radar"
+    },
+    {
+        "module": "radar_Commands",
+        "command": "fct-radar config 31 128 21 610 615 30 80 15",
+        "description": "Expects: ACK: fct-radar"
+    },
+    {
+        "module": "radar_Commands",
+        "command": "fct-radar dump",
+        "description": "Expects: ACK: fct-radar"
+    },
+    {
+        "module": "radar_Commands",
+        "command": "fct-radar pwrdet",
+        "description": "Expects: tx power:"
+    },
+    {
+        "module": "radar_Commands",
+        "command": "fct-radar frame",
+        "description": "Expects: ACK: fct-radar"
+    },
+    {
+        "module": "battery_Commands",
+        "command": "fct-bat voltage",
+        "description": "Expects: vbat voltage:"
+    },
+    {
+        "module": "battery_Commands",
+        "command": "fct-bat temp",
+        "description": "Expects: vbat temperature:"
+    },
+    {
+        "module": "battery_Commands",
+        "command": "fct-bat ilimit 30",
+        "description": "Expects: Set PMIC ilimit to 30 mA"
+    },
+    {
+        "module": "battery_Commands",
+        "command": "fct-bat ilimit",
+        "description": "Expects: input current limit: 30mA"
+    },
+    {
+        "module": "battery_Commands",
+        "command": "fct-bat dumpreg",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "battery_Commands",
+        "command": "fct-bat charger status",
+        "description": "Expects: ACK: fct-bat"
+    },
+    {
+        "module": "battery_Commands",
+        "command": "fct-bat charger enable",
+        "description": "Expects: ACK: fct-bat"
+    },
+    {
+        "module": "battery_Commands",
+        "command": "fct-bat charger disable",
+        "description": "Expects: ACK: fct-bat"
+    },
+    {
+        "module": "flash_Commands",
+        "command": "fct-flash test",
+        "description": "Expects: INFO: Starting flash write test with chipid"
+    },
+    {
+        "module": "hw_Commands",
+        "command": "gpio read 1",
+        "description": "Expects: GPIO pin 1 is "
+    },
+    {
+        "module": "hw_Commands",
+        "command": "gpio set 1",
+        "description": "Expects: GPIO pin 1 is 1"
+    },
+    {
+        "module": "hw_Commands",
+        "command": "gpio clear 1",
+        "description": "Expects: GPIO pin 1 is 0"
+    },
+    {
+        "module": "hw_Commands",
+        "command": "wdog status",
+        "description": "Expects: SoftDog State"
+    },
+    {
+        "module": "hw_Commands",
+        "command": "i2c 1 0x4b 0x5d 1 0xc0",
+        "description": "Expects: writing..."
+    },
+    {
+        "module": "hw_Commands",
+        "command": " pwm 0 2000 1",
+        "description": "Expects: ACK: pwm"
+    },
+    {
+        "module": "hw_Commands",
+        "command": "pwm 0",
+        "description": "Expects: ACK: pwm"
+    },
+    {
+        "module": "hw_Commands",
+        "command": "flash info 0",
+        "description": "Expects: chip ID: 0"
+    },
+    {
+        "module": "fct-iotest_Commands",
+        "command": " fct-iotest rfcoex",
+        "description": "Expects: rfcoex: PASS"
+    },
+    {
+        "module": "fct-iotest_Commands",
+        "command": "fct-iotest pmic",
+        "description": "Expects: pmic: PASS"
+    },
+    {
+        "module": "fct-iotest_Commands",
+        "command": "fct-iotest thread",
+        "description": "Expects: thread: PASS"
+    },
+    {
+        "module": "dcs_Test_Set",
+        "command": "dcs sleep true",
+        "description": "Expects: ACK: dcs"
+    },
+    {
+        "module": "dcs_Test_Set",
+        "command": "dcs sleep false",
+        "description": "Expects: ACK: dcs"
+    },
+    {
+        "module": "dcs_Test_Set",
+        "command": "dcs invert true",
+        "description": "Expects: ACK: dcs"
+    },
+    {
+        "module": "dcs_Test_Set",
+        "command": "dcs invert false",
+        "description": "Expects: ACK: dcs"
+    },
+    {
+        "module": "dcs_Test_Set",
+        "command": "dcs displayon false",
+        "description": "Expects: ACK: dcs"
+    },
+    {
+        "module": "dcs_Test_Set",
+        "command": "dcs displayon true",
+        "description": "Expects: ACK: dcs"
+    },
+    {
+        "module": "lcd_Test_Set",
+        "command": "lcd init",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "lcd_Test_Set",
+        "command": "lcd stop",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "lcd_Test_Set",
+        "command": "lcd start",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "lcd_Test_Set",
+        "command": "lcd suspend",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "lcd_Test_Set",
+        "command": "lcd resume",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "lcd_Test_Set",
+        "command": "lcd fill 0x112233",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "lcd_Test_Set",
+        "command": "lcd color_bar",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "lcd_Test_Set",
+        "command": "lcd checker 0xff1122 20",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "lcd_Test_Set",
+        "command": "lcd crosshair 0xff2f4f",
+        "description": "Expects: result = 0"
+    },
+    {
+        "module": "crypto_Test_Set",
+        "command": "crypto",
+        "description": "Expects: ACK: crypto"
+    },
+    {
+        "module": "empty_Test_Set",
+        "command": "AT+INVALID_CMD",
+        "description": "Expects: Error"
+    },
+    {
+        "module": "Error_Test_Set",
+        "command": "AT+INVALID_CMD",
+        "description": "Expects: Error"
+    }
+]

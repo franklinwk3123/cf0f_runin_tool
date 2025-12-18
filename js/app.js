@@ -86,17 +86,48 @@ document.getElementById('exportTermBtn').addEventListener('click', () => {
 // --- Runin UI Logic ---
 
 let scriptCommands = [];
+let factoryCommands = [];
 
 // Initialize Runin Commands
 (async () => {
     await runin.loadCommands('conf/runin_commands.json');
+    await loadFactoryCommands();
     populateCommandDropdown();
     populateDeviceMonitor();
+    // Trigger initial state for UI
+    document.getElementById('commandTemplate').dispatchEvent(new Event('change'));
 })();
+
+async function loadFactoryCommands() {
+    try {
+        const response = await fetch('conf/fct_commands.json');
+        if (response.ok) {
+            factoryCommands = await response.json();
+            populateFactoryCommandDropdown();
+        } else {
+            console.error('Failed to load factory commands');
+        }
+    } catch (error) {
+        console.error('Error loading factory commands:', error);
+    }
+}
+
+function populateFactoryCommandDropdown() {
+    const select = document.getElementById('factoryCommandSelect');
+    select.innerHTML = '<option value="">Select Command...</option>';
+    factoryCommands.forEach(cmd => {
+        const option = document.createElement('option');
+        option.value = cmd.command;
+        // Truncate description if too long
+        const desc = cmd.description.length > 50 ? cmd.description.substring(0, 47) + '...' : cmd.description;
+        option.textContent = `[${cmd.module}] ${cmd.command} - ${desc}`;
+        select.appendChild(option);
+    });
+}
 
 function populateCommandDropdown() {
     const select = document.getElementById('commandTemplate');
-    select.innerHTML = '<option value="">Custom...</option>';
+    select.innerHTML = '<option value="">FCT</option>';
     
     const commands = runin.getCommands();
     commands.filter(cmd => cmd.category === 'script').forEach(cmd => {
@@ -156,11 +187,13 @@ document.getElementById('commandTemplate').addEventListener('change', (e) => {
     const selectedCmdValue = e.target.value;
     const inputEl = document.getElementById('commandInput');
     const helpEl = document.getElementById('commandHelpText');
+    const factorySelect = document.getElementById('factoryCommandSelect');
 
     const commands = runin.getCommands();
     const template = commands.find(c => c.command === selectedCmdValue);
 
     if (template) {
+        factorySelect.style.display = 'none';
         // Pre-fill input with command + default args
         // If there are args, add a space, otherwise just the command
         inputEl.value = template.command + (template.args ? ' ' + template.args : '');
@@ -176,9 +209,18 @@ document.getElementById('commandTemplate').addEventListener('change', (e) => {
             }, 0);
         }
     } else {
-        // Custom mode
+        // FactoryTestCommand mode
+        factorySelect.style.display = 'block';
         inputEl.value = '';
-        helpEl.textContent = 'Enter any custom command supported by the device.';
+        helpEl.textContent = 'Select a factory command from the list or enter a custom one.';
+    }
+});
+
+// Handle Factory Command Selection
+document.getElementById('factoryCommandSelect').addEventListener('change', (e) => {
+    const selectedCmd = e.target.value;
+    if (selectedCmd) {
+        document.getElementById('commandInput').value = selectedCmd;
     }
 });
 
